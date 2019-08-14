@@ -1,5 +1,5 @@
-docker exec -it containername /bin/bash
-cd /opt/bitnami/kafka/
+docker exec -it kafka-docker_kafka-server_1 /bin/bash
+cd /opt/bitnami/kafka/bin
 ./kafka-topics.sh --zookeeper kafka-docker_zookeeper_1:2181 --topic first_topic --create --partitions 3 --replication-factor 1
 ./kafka-topics.sh --zookeeper kafka-docker_zookeeper_1:2181 --list
 ./kafka-topics.sh --zookeeper kafka-docker_zookeeper_1:2181 --topic first_topic --describe
