@@ -15,6 +15,7 @@ kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic first_topic 
 kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
 kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe first-app
 kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group first-app --reset-offsets --to-earliest --execute --topic first_topic
+kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe twitter --group elasticsearch_twitter_consumer
 
 
 
