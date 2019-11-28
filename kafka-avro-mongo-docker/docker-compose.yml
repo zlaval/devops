@@ -1,0 +1,87 @@
+version: '3'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: "2181"
+      ZOOKEEPER_TICK_TIME: "2000"
+      ZOOKEEPER_SERVERS: "zookeeper:22888:23888"
+    ports:
+      - "2181:2181"
+  kafka-server:
+    image: confluentinc/cp-kafka
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_BROKER_ID: 1
+      KAFKA_BROKER_RACK: "r1"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+  mongo:
+    image: 'mongo:latest'
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: pi
+      MONGO_INITDB_ROOT_PASSWORD: pi
+    ports:
+      - "27017:27017"
+  schema-registry:
+    image: confluentinc/cp-schema-registry
+    container_name: schema-registry
+    hostname: schema-registry
+    depends_on:
+      - kafka-server
+      - zookeeper
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "zookeeper:2181"
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:8081"
+      SCHEMA_REGISTRY_DEBUG: "true"
+    ports:
+      - 8081:8081
+  schema-registry-ui:
+    image: landoop/schema-registry-ui
+    container_name: schema-registry-ui
+    environment:
+      SCHEMAREGISTRY_URL: http://schema-registry:8081/
+      PROXY: "true"
+    depends_on:
+      - schema-registry
+    ports:
+      - 8099:8000
+  kafka-rest-proxy:
+    image: confluentinc/cp-kafka-rest
+    container_name: kafka-rest-proxy
+    depends_on:
+      - schema-registry
+    environment:
+      KAFKA_REST_LISTENERS: http://0.0.0.0:8082/
+      KAFKA_REST_SCHEMA_REGISTRY_URL: http://schema-registry:8081/
+      KAFKA_REST_HOST_NAME: kafka-rest-proxy
+      KAFKA_REST_ZOOKEEPER_CONNECT: zookeeper:2181
+    ports:
+      - 8082:8082
+  kafka-topics-ui:
+    image: landoop/kafka-topics-ui
+    container_name: kafka-topics-ui
+    depends_on:
+      - kafka-rest-proxy
+    environment:
+      KAFKA_REST_PROXY_URL: "http://kafka-rest-proxy:8082/"
+      PROXY: "true"
+    ports:
+      - 8098:8000
+
+    

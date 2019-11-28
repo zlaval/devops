@@ -18,4 +18,8 @@ kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group first-app --r
 kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe twitter --group elasticsearch_twitter_consumer
 
 
+PUT /twitter/_settings
+{"index.mapping.total_fields.limit": 2000000}
+
+
 
