@@ -83,5 +83,12 @@ services:
       PROXY: "true"
     ports:
       - 8098:8000
+  kafka-producer-ui:
+    image: zalerix/kafka-avro-publish-ui
+    container_name: kafka-producer-ui
+    depends_on:
+      - kafka-server
+    ports:
+      - 8097:8080
 
     
