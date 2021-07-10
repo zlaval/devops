@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rest-pod
+  labels:
+    name: rest-test
+spec:
+  containers:
+  - name: rest-test
+    image: zalerix/rest-test
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "1"
+    ports:
+      - containerPort: 4567

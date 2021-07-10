@@ -1,0 +1,11 @@
+version: '3'
+services:
+  mongo:
+    image: 'mongo:latest'
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: pi
+      MONGO_INITDB_ROOT_PASSWORD: pi
+    ports:
+      - "27017:27017"

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper
@@ -28,15 +28,15 @@ services:
     ports:
       - "9092:9092"
       - "29092:29092"
-  mongo:
-    image: 'mongo:latest'
-    container_name: mongodb
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: pi
-      MONGO_INITDB_ROOT_PASSWORD: pi
-    ports:
-      - "27017:27017"
+ # mongo:
+ #   image: 'mongo:latest'
+ #   container_name: mongodb
+ #   restart: always
+ #   environment:
+ #     MONGO_INITDB_ROOT_USERNAME: pi
+ #     MONGO_INITDB_ROOT_PASSWORD: pi
+ #   ports:
+ #     - "27017:27017"
   schema-registry:
     image: confluentinc/cp-schema-registry
     container_name: schema-registry
@@ -86,9 +86,13 @@ services:
   kafka-producer-ui:
     image: zalerix/kafka-avro-publish-ui
     container_name: kafka-producer-ui
+    environment:
+      STORAGE_PATH: /files
     depends_on:
       - kafka-server
+    volumes:
+      - type: bind
+        source: //d/files
+        target: /files
     ports:
       - 8097:8080
-
-    

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-client-cluster-ip
+spec:
+  type: ClusterIP
+  selector:
+    app: app-rest-client
+  ports:
+  - port: 4567
+    targetPort: 4567

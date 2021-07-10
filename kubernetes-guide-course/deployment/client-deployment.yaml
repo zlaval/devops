@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-rest-client
+  template:
+    metadata:
+      labels:
+        app: app-rest-client
+    spec:
+      volumes:
+        - name: rest-client-storage
+          persistentVolumeClaim:
+            claimName: data-persistent-volume-claim
+      containers:
+        - name: rest-client
+          image: zalerix/rest-test
+          env:
+            - name: DB_HOST
+              value: db-cluster-ip-service
+            - name: DB_PW_FIELD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: database-password
+                  key: DB_PASSWORD
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 4567
+          volumeMounts:
+            - mountPath: /home
+              name: rest-client-storage
