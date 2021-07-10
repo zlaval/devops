@@ -11,20 +11,50 @@ kubectl create secret generic dbpassword --from-literal DB_PASSWORD=1234
 
 kubectl get secrets
 
-
 kubectl get namespaces
 kubectl create namespace cert-manager
 
-
 kubectl get certificates
 
+kubectl get nodes
 
+kubectl get pods -o wide
 
+kubectl edit pod <podname>
 
+kubectl port-forward <pod> <port>:<port>
 
+kubectl logs -f <pod> --tail=10
 
+kubectl exec --stdin --tty <pod>-- /bin/bash
 
+kubectl get pods -n <namespace>
 
+kubectl cp <pod>:<file> <local_file>
+
+kubectl get resourcequota -o yaml
+
+kubectl scale deploy <deployment> --replicas=0
+
+kubectl autoscale deployment <deployment_name> --min=1 --max=10
+
+kubectl get pod <pod-name> -o yaml > pod-definition.yaml
+
+kubectl get replicaset
+
+kubectl replace -f <replicaset-definition.yml>
+kubectl scale --replicas=6 -f <replicaset-definition.yml>
+kubectl scale --replicas=6 replicaset <replicaset-name>
+
+kubectl get all
+
+kubectl config set-context $( kubectl config current-context) --namespace=dev
+
+kubectl get pods --all-namespaces
+
+kubectl run nginx --image=nginx  --dry-run=client -o yaml
+
+kubectl create deployment --image=nginx nginx --dry-run -o yaml
 
 HELM:
 

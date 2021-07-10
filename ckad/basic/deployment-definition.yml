@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-client-replicaset
+  labels:
+    app: rest-client
+    type: backend
+spec:
+  template:
+    metadata:
+      name: test-pod
+      labels:
+        app: test-pod
+        type: backend
+    spec:
+      containers:
+        - name: test-pod
+          image: zalerix/rest-test
+          resources:
+            limits:
+              memory: "64Mi"
+              cpu: "100m"
+          ports:
+            - containerPort: 4567
+  replicas: 3
+  selector:
+    matchLabels:
+      type: backend

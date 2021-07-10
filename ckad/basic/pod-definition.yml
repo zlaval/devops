@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+  labels:
+    app: test-pod
+spec:
+  containers:
+  - name: test-pod
+    image: zalerix/rest-test
+    resources:
+      limits:
+        memory: "64Mi"
+        cpu: "100m"
+    ports:
+      - containerPort: 4567
+    env:
+      - name: COLOR
+        value: blue
+      
