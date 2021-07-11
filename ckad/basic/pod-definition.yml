@@ -5,6 +5,8 @@ metadata:
   labels:
     app: test-pod
 spec:
+  securityContext:
+    runAsUser: 1000
   containers:
   - name: test-pod
     image: zalerix/rest-test
@@ -17,4 +19,30 @@ spec:
     env:
       - name: COLOR
         value: blue
+    envFrom:
+      - configMapRef:
+          name: app-config
+      - secretRef:
+          name: app-secret
+    securityContext:
+      runAsUser: 1000
+      capabilities:
+        add: ['MAC_ADMIN']
+  tolerations:
+    - key: app
+      operator: "Equal"
+      value: blue
+      effect: NoSchedule
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: size
+              operator: In
+              values:
+                - "Large" 
+#  nodeSelector:
+#    size: Large
+  
       
