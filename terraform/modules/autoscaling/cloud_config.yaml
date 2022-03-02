@@ -1,0 +1,18 @@
+write_files:
+  - path: /etc/server.conf
+    owner: root:root
+    permissions: "0644"
+    content: |
+      {
+        "user": "${user}"
+        "password": "${password}"
+        "database": "${database}"
+        "netloc": "${hostname}:${port}"
+      }
+runcmd:
+
+
+packages:
+  -jq
+  -wget
+  -unzip

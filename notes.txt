@@ -7,11 +7,25 @@ kubectl get pv
 kubectl get pvc
 
 //create secret
+ssh -i c:\Users\zlava\.ssh\id_rsa_tcom tothza@10.20.66.6 -p 22 -L 1521:172.28.26.69:1521
+
+git update-index --chmod=+x gradlew
+
+mongo --host=<hostname> --port=27017 --username=<username> --password=<pw> --authenticationDatabase=<db>
+
+./visualvm --openjmx localhost:9999
+
+$ docker run -d -v /path/to/pem/:/etc/ssl/ mongo:3.6 --tlsMode requireTLS --sslPEMKeyFile /etc/ssl/mongodb.pem <additional options>
+
+ docker run -d --name=mongo-tls  -p 27017:27017  -e MONGO_INITDB_ROOT_USERNAME=pi -e MONGO_INITDB_ROOT_PASSWORD=pi -v d:/Workdoc/telekom/docker-compose/mongo-tls/cert:/keys mongo:bionic --tlsMode requireTLS --tlsCertificateKeyFile /keys/mongodb.pem --tlsCAFile /keys/rootCA.pem --tlsAllowConnectionsWithoutCertificates --tlsAllowInvalidCertificates
+----
+
 kubectl create secret generic dbpassword --from-literal DB_PASSWORD=1234
 
 kubectl get secrets
 
 kubectl get namespaces
+
 kubectl create namespace cert-manager
 
 kubectl get certificates
@@ -22,7 +36,7 @@ kubectl get pods -o wide
 
 kubectl edit pod <podname>
 
-kubectl port-forward <pod> <port>:<port>
+kubectl port-forward <pod> <local-port>:<pod-port>
 
 kubectl logs -f <pod> --tail=10
 
@@ -43,7 +57,9 @@ kubectl get pod <pod-name> -o yaml > pod-definition.yaml
 kubectl get replicaset
 
 kubectl replace -f <replicaset-definition.yml>
+
 kubectl scale --replicas=6 -f <replicaset-definition.yml>
+
 kubectl scale --replicas=6 replicaset <replicaset-name>
 
 kubectl get all
@@ -57,15 +73,17 @@ kubectl run nginx --image=nginx  --dry-run=client -o yaml
 kubectl create deployment --image=nginx nginx --dry-run -o yaml
 
 kubectl get configmaps
+
 kubectl describe configmaps
 
 kubectl taint nodes node1 app=blue:NoSchedule
 
-kubectl label node <nodename> size=Large
+kubectl label node <nodename> size=Large 
 
 kubectl rollout status deployment/myapp-deployment
 
 kubectl rollout history deployment/rest-client-replicaset
+
 kubectl rollout history deployment/rest-client-replicaset --revision=3
 
 kubectl set image deployment/myapp-deployment oldimage=newimage
@@ -78,6 +96,37 @@ kubectl get replicasets
 
 kubectl get cronjob
 
+kubectl top pod
+
+kubectl delete pod <podname>
+
+kubectl port-forward pod/<podname> port:port
+
+kubectl logs -f <podname> --tail=100
+
+kubectl exec --stdin --tty <pod> -- /bin/bash
+
+kubectl cp <pod>:<filepath> <local_file>
+
+kubectl get resourcequota -n <namespace> -o yaml
+
+kubectl scale deploy <deployment_name> --replicas=0
+
+kubectl autoscale deployment <deployment_name> --min=1 --max=10
+
+kubectl resource_capacity --node-labels node-role.kubernetes.io/node= -u -p | awk '$2~/^dev[0-9]|itst[0-9]|devtesting[0-9]/' | sed -e 's/([0-9]*%)//g' | sort -k4,4 -h -r | head -n20
+
+
+ kubectl describe replicaset dev-demo-app-deployment-bf4f87cf8
+
+HEAP DUMP:
+kubectl port-forward  pod/<podname> 9999:9999
+kubectl cp <podname>:dump.hprof tmp.hprof
+
+$ kex <podname>
++ kubectl exec <podname> -it -- sh
+/ # netstat -nap | grep $(ip a | grep global | awk '{print $2}'| awk -F/ '{print $1}'):8000 | awk '{print $5}'  |awk -F: '{print $1}' | sort | uniq -c | while read i j ; do  j=$(nslookup  $j  2>/dev/null | grep Address); printf  "%3s %139s\n" $i "$j" ; done
+
 HELM:
 
 helm repo add jetstack https://charts.jetstack.io
@@ -88,12 +137,22 @@ helm install cert-manager jetstack/cert-manager --namespace cert-manager --versi
 
 
 
+docker history kubernetes-spring-example
+
+docker image inspect kubernetes-spring-example
 
 
+ISTIO
+
+istioctl install --set profile=demo -y
+kubectl label namespace default istio-injection=enabled
+kubectl apply -f samples/addons
+istioctl dashboard kiali
 
 
+AWS
 
-
+aws-vault exec zalan --duration=12h -- cmd.exe
 
 
 
