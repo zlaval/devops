@@ -10,7 +10,7 @@ resource "aws_db_instance" "database" {
   engine                 = "postgresql"
   engine_version         = "14"
   identifier             = "${var.namespace}-${var.project_name}-db"
-  name                   = "demo_db"
+  db_name                = "demo_db"
   username               = "zlaval"
   password               = random_password.password.result
   db_subnet_group_name   = var.vpc.database_subnet_group

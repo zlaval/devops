@@ -5,7 +5,7 @@ variable "namespace" {
 }
 
 variable "project_name" {
-  default = "example_project"
+  default = "example-project"
   type    = string
 }
 

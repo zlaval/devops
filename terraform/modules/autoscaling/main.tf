@@ -1,6 +1,6 @@
 module "iam_instance_profile" {
-  source = "terraform-in-action/iip/aws"
-  action = ["logs:*", "rds:*"]
+  source  = "terraform-in-action/iip/aws"
+  actions = ["logs:*", "rds:*"]
 }
 
 data "cloudinit_config" "config" {
@@ -23,7 +23,7 @@ data "aws_ami" "amazon_linux" {
 
 resource "aws_launch_template" "webserver" {
   name_prefix   = var.namespace
-  image_id      = data.aws_ami.amazon_linux
+  image_id      = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
   user_data     = data.cloudinit_config.config.rendered
   key_name      = var.ssh_keypair

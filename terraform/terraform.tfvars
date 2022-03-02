@@ -1,3 +1,3 @@
 namespace = "dev"
 region = "eu-central-1"
-project_name = "example_project"
+project_name = "example-project"
