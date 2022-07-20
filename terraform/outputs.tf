@@ -1,8 +1,8 @@
-output "db_password" {
-  value = module.database.db_config.password
-  sensitive = true
+output "public_subnet" {
+  value = module.network.subnet
 }
 
-output "lb_dns_name" {
-  value = module.autoscaling.lb_dns_name
+output "database" {
+  value     = module.database.db_config
+  sensitive = true
 }
