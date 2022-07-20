@@ -1,0 +1,4 @@
+namespace    = "dev"
+region       = "eu-central-1"
+project_name = "terrenv"
+ssh_key      = ""

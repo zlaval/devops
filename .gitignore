@@ -113,3 +113,6 @@ terraform.rc
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/vcs.xml
+
+*.tfvars
+/.idea/git_toolbox_prj.xml
