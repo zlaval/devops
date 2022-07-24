@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/rest/info/logged-in-count"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "text/plain;charset=UTF-8"
+    },
+    "body": "1"
+  }
+}
