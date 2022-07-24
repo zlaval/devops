@@ -8,7 +8,7 @@ data "aws_ami" "amazon_linux" {
 }
 
 resource "aws_lb_target_group" "target-group" {
-  name     = "target-group"
+  name     = "${var.namespace}-${var.project_name}-tg"
   protocol = "HTTP"
   vpc_id   = var.vpc.id
   #  target_type = "ip"
@@ -31,7 +31,7 @@ resource "aws_lb_listener" "listener" {
 }
 
 resource "aws_security_group" "instance" {
-  name        = "application"
+  name        = "${var.namespace}-${var.project_name}-app"
   description = "Allow traffic to application"
   vpc_id      = var.vpc.id
 
@@ -75,7 +75,7 @@ resource "aws_key_pair" "ssh" {
 }
 
 resource "aws_launch_template" "server" {
-  name_prefix            = var.namespace
+  name_prefix            = "${var.namespace}-${var.project_name}"
   image_id               = data.aws_ami.amazon_linux.id
   instance_type          = "t2.micro"
   key_name               = aws_key_pair.ssh.key_name
@@ -101,7 +101,7 @@ resource "aws_autoscaling_group" "server" {
 }
 
 resource "aws_autoscaling_policy" "scaling_up" {
-  name                   = "scale_up"
+  name                   = "${var.namespace}-${var.project_name}-scale_up"
   autoscaling_group_name = aws_autoscaling_group.server.name
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 30
@@ -109,15 +109,15 @@ resource "aws_autoscaling_policy" "scaling_up" {
 }
 
 resource "aws_autoscaling_policy" "scaling_down" {
-  name                   = "scale_down"
+  name                   = "${var.namespace}-${var.project_name}-scale_down"
   autoscaling_group_name = aws_autoscaling_group.server.name
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 30
   scaling_adjustment     = -1
 }
 
-resource "aws_cloudwatch_metric_alarm" "scale_up" {
-  alarm_name          = "scale_up"
+resource "aws_cloudwatch_metric_alarm" "scale" {
+  alarm_name          = "${var.namespace}-${var.project_name}-scale"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
   period              = 60

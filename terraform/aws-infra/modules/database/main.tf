@@ -5,7 +5,7 @@ locals {
 
 
 resource "aws_db_subnet_group" "db_subnet" {
-  name       = "db-subnet"
+  name       = "${var.namespace}-${var.project_name}-group"
   subnet_ids = [
     var.subnet.private_a.id,
     var.subnet.private_b.id
@@ -13,7 +13,7 @@ resource "aws_db_subnet_group" "db_subnet" {
 }
 
 resource "aws_security_group" "database" {
-  name        = "database"
+  name        = "${var.namespace}-${var.project_name}-db"
   description = "Allow traffic to database"
   vpc_id      = var.vpc.id
 

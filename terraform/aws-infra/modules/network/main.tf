@@ -78,7 +78,7 @@ resource "aws_route_table_association" "private_b_to_private" {
 }
 
 resource "aws_security_group" "load_balancer" {
-  name        = "load-balancer"
+  name        = "${var.namespace}-${var.project_name}-alb"
   description = "Allow traffic to loadbalancer"
   vpc_id      = aws_default_vpc.default.id
 
@@ -100,7 +100,7 @@ resource "aws_security_group" "load_balancer" {
 }
 
 resource "aws_lb" "load_balancer" {
-  name               = "load-balancer"
+  name               = "${var.namespace}-${var.project_name}-alb"
   load_balancer_type = "application"
   internal           = false
   subnets            = [
@@ -122,7 +122,7 @@ resource "aws_wafv2_ip_set" "blocked_ips" {
 }
 
 #resource "aws_wafv2_web_acl" "firewall" {
-#  name  = "firewall"
+#  name  = "${var.namespace}-${var.project_name}-firewall"
 #  scope = "REGIONAL"
 #  default_action {
 #    allow {}
