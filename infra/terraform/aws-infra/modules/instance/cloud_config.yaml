@@ -13,7 +13,8 @@ write_files:
       }
 
 runcmd:
-  - wget -O app.zip https://drive.google.com/uc?id=1MiManndPctrnACj98ou3t5yMJ77JMOOp
+  - wget -O app.zip https://github.com/zlaval/go-rest/archive/refs/heads/master.zip
   - unzip app.zip
+  - cp go-rest-master/* .
   - sudo go build .
   - sudo go run .
