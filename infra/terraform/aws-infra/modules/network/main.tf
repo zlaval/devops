@@ -110,16 +110,16 @@ resource "aws_lb" "load_balancer" {
   security_groups = [aws_security_group.load_balancer.id]
 }
 
-resource "aws_wafv2_ip_set" "blocked_ips" {
-  ip_address_version = "IPV4"
-  name               = "blocked-ips"
-  scope              = "REGIONAL"
-  addresses          = var.blocked_ips
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
+#resource "aws_wafv2_ip_set" "blocked_ips" {
+#  ip_address_version = "IPV4"
+#  name               = "blocked-ips"
+#  scope              = "REGIONAL"
+#  addresses          = var.blocked_ips
+#
+#  lifecycle {
+#    create_before_destroy = true
+#  }
+#}
 
 #resource "aws_wafv2_web_acl" "firewall" {
 #  name  = "${var.namespace}-${var.project_name}-firewall"

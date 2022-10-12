@@ -13,7 +13,6 @@ module "instance" {
   subnet       = module.network.subnet
   vpc          = module.network.vpc
   db_config    = module.database.db_config
-
 }
 
 module "database" {

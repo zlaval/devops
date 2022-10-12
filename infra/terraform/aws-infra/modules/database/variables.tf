@@ -16,8 +16,6 @@ variable "app_security_group" {
 
 variable "subnet" {
   type = object({
-    public_a  = any
-    public_b  = any
     private_a = any
     private_b = any
   })

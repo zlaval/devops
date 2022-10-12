@@ -11,7 +11,6 @@ resource "aws_lb_target_group" "target-group" {
   name     = "${var.namespace}-${var.project_name}-tg"
   protocol = "HTTP"
   vpc_id   = var.vpc.id
-  #  target_type = "ip"
   port     = 8080
   health_check {
     enabled           = true
