@@ -7,7 +7,7 @@ kubectl get pv
 kubectl get pvc
 
 //create secret
-ssh -i c:\Users\zlava\.ssh\id_rsa_tcom tothza@10.20.66.6 -p 22 -L 1521:172.28.26.69:1521
+ssh -i \.ssh\id_rsa p:ip:p
 
 git update-index --chmod=+x gradlew
 
@@ -17,7 +17,7 @@ mongo --host=<hostname> --port=27017 --username=<username> --password=<pw> --aut
 
 $ docker run -d -v /path/to/pem/:/etc/ssl/ mongo:3.6 --tlsMode requireTLS --sslPEMKeyFile /etc/ssl/mongodb.pem <additional options>
 
- docker run -d --name=mongo-tls  -p 27017:27017  -e MONGO_INITDB_ROOT_USERNAME=pi -e MONGO_INITDB_ROOT_PASSWORD=pi -v d:/Workdoc/telekom/docker-compose/mongo-tls/cert:/keys mongo:bionic --tlsMode requireTLS --tlsCertificateKeyFile /keys/mongodb.pem --tlsCAFile /keys/rootCA.pem --tlsAllowConnectionsWithoutCertificates --tlsAllowInvalidCertificates
+ docker run -d --name=mongo-tls  -p 27017:27017  -e MONGO_INITDB_ROOT_USERNAME=pi -e MONGO_INITDB_ROOT_PASSWORD=pi -v /docker-compose/mongo-tls/cert:/keys mongo:bionic --tlsMode requireTLS --tlsCertificateKeyFile /keys/mongodb.pem --tlsCAFile /keys/rootCA.pem --tlsAllowConnectionsWithoutCertificates --tlsAllowInvalidCertificates
 ----
 
 kubectl create secret generic dbpassword --from-literal DB_PASSWORD=1234
@@ -135,12 +135,14 @@ helm repo update
 helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.4.0 --create-namespace
 
 
-
-
 docker history kubernetes-spring-example
 
 docker image inspect kubernetes-spring-example
 
+docker compose --env-file ./config/.env.dev up
+
+
+docker-compose -f a.yml -f b.yml -f c.yml up
 
 ISTIO
 
@@ -152,7 +154,7 @@ istioctl dashboard kiali
 
 AWS
 
-aws-vault exec zalan --duration=12h -- cmd.exe
+aws-vault exec myname --duration=12h -- cmd.exe
 
 
 

@@ -1,0 +1,8 @@
+version: '3.1'
+
+services:
+  db:
+    image: openzipkin/zipkin-slim
+    container_name: zipkin
+    ports:
+      - "9411:9411"
