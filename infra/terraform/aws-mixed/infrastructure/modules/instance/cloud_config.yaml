@@ -1,0 +1,19 @@
+packages:
+  - unzip
+  - golang-go
+
+write_files:
+  - path: config.json
+    owner: root:root
+    permission: "0644"
+    content: |
+      {
+          "port": 8080,
+          "connection_string": "host=${hostname} user=${user} password=${password} dbname=${database} port=${port} sslmode=disable"
+      }
+
+runcmd:
+  - wget -O app.zip https://drive.google.com/uc?id=1MiManndPctrnACj98ou3t5yMJ77JMOOp
+  - unzip app.zip
+  - sudo go build .
+  - sudo go run .

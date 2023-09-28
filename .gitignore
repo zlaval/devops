@@ -119,3 +119,10 @@ terraform.rc
 
 .idea/
 *.iml
+
+.idea/
+*.iml
+*.tfvars
+*.tfstate*
+*.hcl
+.terraform/
